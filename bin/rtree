@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+require 'rtree'
+
+require 'optparse'
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: rtree DIRECTORY"
+
+  opts.on("-l N", Integer, "Directory depth.") do |l|
+    options[:level] = l
+  end
+  opts.on("--hidden","Show hidden files.") do
+    options[:show_hidden]=true
+  end
+  opts.on('-h','--help','HELP') do
+    puts opts
+    exit
+  end
+  
+end.parse!
+ARGV<<'.' if ARGV.empty?
+Dir.tree ARGV[0],options
+
+
