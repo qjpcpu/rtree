@@ -9,7 +9,7 @@ class Dir
       next if entry =~ /^\./ && !options[:show_hidden]
       line = "|   " * nesting + "|-- #{entry}" 
       full_path="#{dir}#{File::SEPARATOR}#{entry}"
-      line << " -> #{File.realpath(full_path)}" if File.symlink?(full_path)
+      line << " -> #{File.readlink(full_path)}" if File.symlink?(full_path)
       puts line
       output<<line<<"\n"
       if File.directory?(full_path) && !File.symlink?(full_path)
